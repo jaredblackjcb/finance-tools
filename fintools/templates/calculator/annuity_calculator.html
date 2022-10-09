@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+{% extends "../main.html" %}
+{% block content %}
+    <h1>Future Value of Annuity Calculator</h1>
+    <form method="POST">
+        {{ annuity_calculator_form.as_p }}
+        {% csrf_token %}
+        <input class="button is-primary" type="submit" value="Calculate" />
+    </form>
+    <label for="Future value">Future Value: {{future_value}}</label>
+{% endblock %}
