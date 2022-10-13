@@ -1,0 +1,6 @@
+
+  .bulma-control-mixin {
+    @include control;
+    border-width: 2px;
+    border-color: #c8c8c8;
+  }
