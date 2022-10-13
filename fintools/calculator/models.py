@@ -12,15 +12,6 @@ from django.db import models
 #     total_payment_periods = models.IntegerField()
 #     monthly_mortgage_payment = models.DecimalField(max_digits=6, decimal_places=2)
 
-# class FutureValueAnnuity(models.Model):
-#     future_value = models.DecimalField(max_digits=30, decimal_places=2)
-#     payment = models.DecimalField(max_digits=10, decimal_places=2)
-#     interest_rate = models.DecimalField(max_digits=5, decimal_places=2)
-#     number_periods = models.IntegerField()
-
-#     def __str__(self):
-#         return future_value
-
 class MailingMember(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50)
