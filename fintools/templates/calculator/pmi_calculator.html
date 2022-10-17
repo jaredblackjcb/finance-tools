@@ -1,5 +1,88 @@
 <!DOCTYPE html>
 {% extends "../main.html" %}
+{% load widget_tweaks %}
 {% block content %}
-    <h1>PMI Calculator</h1>
+<section>
+    <div class="tile is-ancestor">
+        <div class="tile is-parent">
+            <div class="tile is-child box has-background-light">
+                <h1 class="subtitle is-5">PMI Calculator</h1>
+                <div class="columns">
+                    <div class="column is-3">
+                        <form method="POST">
+                            {% csrf_token %}
+                            {% for field in form.visible_fields %}
+                                <div class="field">
+                                    <label class="label">{{ field.label }}</label>
+                                        <div class="bulma-control-mixin">
+                                            {% render_field field class="input bulma-control-mixin" %}
+                                        </div>
+                                        {% if field.help_text %}
+                                            <p class="help">{{field.help_text}}</p>
+                                        {% endif %}
+                                </div>
+                            {% endfor %}
+                            <div class="field">
+                                <label class="label">{{ form.interest_rate.label }}</label>
+                                    <div class="bulma-control-mixin control has-icons-right">
+                                        {% render_field form.interest_rate class="input bulma-control-mixin" %}
+                                        <span class="icon is-right">
+                                            <i class="fa-solid fa-percent"></i>
+                                        </span>
+                                    </div>
+                                    {% if form.interest_rate.help_text %}
+                                        <p class="help">{{field.help_text}}</p>
+                                    {% endif %}
+                            </div>
+                            <div class="columns is-vcentered">
+                                <div class="column">
+                                    <input class="button is-primary" type="submit" value="Submit"/>
+                                </div>
+                                <div class="column is-8">
+                                    <!-- TODO: Add Explanation here -->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="column">
+                        
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="tile is-ancestor">
+        <div class="tile is-parent">
+            <div class="tile is-child box has-background-light">
+                <table class="table is-hoverable">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Principal Paydown</th>
+                            <th>Interest Payment</th>
+                            <th>Loan Amount</th>
+                            <th>Amount Needed to Cancel PMI</th>
+                            <th>Effective Annual Borrowing Cost of PMI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for index, row in pmi_data.iterrows %}
+                        <tr>
+                          {% for cell in row %}
+                            <td>
+                              {{cell}}
+                            </td>
+                          {% endfor %}
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                    </table>
+
+            </div>
+        </div>
+    </div>
+</section>
+
 {% endblock %}
