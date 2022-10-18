@@ -5,74 +5,65 @@
         <section class="hero">
             <div class="hero-body">
                 <div class="container">
+                    <div class="content">
                     <h1 class="title is-2">Optimize your finances.</h1>
-                    <p class="subtitle">There is a lot of conflicting financial advice out there. Use our 
-                        personalized calculators to cut through the noise and do your 
-                        own analysis to make the best decisions for your financial future. </p>
-                    <a class="button is-primary is-large" href="{% url 'index' %}#notify">Join the Waitlist</a>
+                        <p class="subtitle">There is a lot of conflicting financial advice out there. Our personalized tools and guides
+                            will help you cut through the noise and make the best decisions for your financial future.</p>
+                            <p class="subtitle">Here is a sneak peek at some of our upcoming features:</p>
+                            <ul>
+                                <li>Use our backtesting engine to simulate the performance of your investment strategies</li>
+                                <li>Securely connect to your financial accounts using Plaid for AI-assisted decision making</li>
+                                <li>Save and compare scenarios to help make the best possible decision</li>
+                                <li>Investing guides and educational content to help you take control of your finances</li>
+                            </ul>
+                            <p class="subtitle">Join our newsletter to stay in the loop on new features and content!</p>
+                    </div>
+                    <!-- <a class="button is-primary is-large" href="{% url 'index' %}#notify">Notify Me</a> -->
                 </div>
             </div>    
-        </section>
-        <section class="hero is-medium">
-            <div class="hero-body">
-                <div class="container">
-                    <h1 class="title">Save and compare multiple scenarios</h1>
-                    <p class="subtitle">Scenario-based planning helps you make the best possible decisions</p>
-                </div>
-            </div>
-        </section>
-        <section class="hero is-medium">
-            <div class="hero-body">
-                <div class="container">
-                    <h1 class="title">Get personalized recommendations that will make you money</h1>
-                    <p class="subtitle">Our smart platform provides insights to help you take action for a brighter future</p>
-                </div>
-            </div>
-        </section>
-        <section class="hero is-medium">
-            <div class="hero-body">
-                <div class="container">
-                    <h1 class="title">Securely connect to your financial accounts for personalized calculations</h1>
-                    <p class="subtitle">We use Plaid to securely connect to your accounts with read-only access.</p>
-                </div>
-            </div>
         </section>
 
         <!-- REGISTRATION FORM -->
         <section class="cta va">
-            <div class="container">
-              <div class="columns">
-                <div class="column is-6">
-                  <h1 class="title is-1 ">Get Notified</h1>
-                  <hr class="content-divider">
-                  <h2 class="subtitle">Be the first to know about new features and tools for planning your financial future. We won't flood your inbox or share your email with anyone.</h2>
-                </div>
-                <div id="notify" class="column is-6">
-                    <form method="POST">
-                        {% csrf_token %}
-                        {% for field in form.visible_fields %}
-                        <div class="field">
-                            <label class="label">{{field.label}}</label>
-                            <div class="bulma-control-mixin">
-                              {% render_field field class="input is-medium bulma-control-mixin" type="text" placeholder=field.label %}
+            <div class="tile is-ancestor">
+                <div class="tile is-parent">
+                    <div class="tile is-child box has-background-light">
+                        <div class="container">
+                        <div class="columns">
+                            <div class="column is-6">
+                            <h1 class="title is-2">Get Notified</h1>
+                            <hr class="content-divider">
+                            <h2 class="subtitle">Be the first to know about new features and tools for planning your financial future. We won't flood your inbox or share your email with anyone.</h2>
+                            </div>
+                            <div id="notify" class="column is-6">
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    {% for field in form.visible_fields %}
+                                    <div class="field">
+                                        <label class="label">{{field.label}}</label>
+                                        <div class="bulma-control-mixin">
+                                        {% render_field field class="input is-medium bulma-control-mixin" type="text" placeholder=field.label %}
+                                        </div>
+                                    </div>
+                                    <br>
+                                    {% endfor %}
+                                    
+                                    <!-- <div class="field">
+                                        <label class="label">Email</label>
+                                        <div class="control">
+                                            <input class="input is-medium" type="email" placeholder="Email">
+                                        </div>
+                                    </div>
+                                    <br> -->
+                                    <div class="field is-grouped">
+                                        <div class="control">
+                                            <button class="button is-primary is-large">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                        <br>
-                        {% endfor %}
-                        
-                        <!-- <div class="field">
-                            <label class="label">Email</label>
-                            <div class="control">
-                                <input class="input is-medium" type="email" placeholder="Email">
-                            </div>
-                        </div>
-                        <br> -->
-                        <div class="field is-grouped">
-                            <div class="control">
-                                <button class="button is-primary is-large">Submit</button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
               </div>
             </div>
