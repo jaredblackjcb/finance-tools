@@ -3,10 +3,23 @@ from django import views
 from django.views import View
 from . import forms
 import math
+from . import calculators
 
 # Create your views here.
 def pmi_calculator(request):
-    context_dict = {}
+    form = forms.PmiCalculator(request.POST)
+    context_dict = {'form': form}
+    if request.method == 'POST':
+        if form.is_valid():
+            purchase_price = form.cleaned_data['purchase_price']
+            down_payment_percent = form.cleaned_data['down_payment'] / 100
+            annual_interest_rate = form.cleaned_data['interest_rate'] / 100
+            loan_term = form.cleaned_data['loan_term']
+            monthly_pmi_payment = form.cleaned_data['monthly_pmi_payment']
+            opportunity_cost_roi = form.cleaned_data['opportunity_cost_roi'] / 100
+            pmi_calculator = calculators.PmiCalculator(purchase_price, down_payment_percent, annual_interest_rate, loan_term, monthly_pmi_payment, opportunity_cost_roi)
+            pmi_data = pmi_calculator.get_optimal_paydown_period()
+            context_dict.update({'pmi_data': pmi_data})
     return render(request, 'calculator/pmi_calculator.html', context=context_dict)
 
 def annuity_calculator(request):
