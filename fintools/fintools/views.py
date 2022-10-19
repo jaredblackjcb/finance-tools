@@ -20,5 +20,6 @@ def index(request):
                 messages.error(request, "User already exists. Please enter a unique name and email address.")
             return redirect('index')
         else:
-            messages.error(request, form.errors['email'])
+            for key, value in form.errors.items():
+                messages.error(request, value)
     return render(request, 'index.html', context=context)
