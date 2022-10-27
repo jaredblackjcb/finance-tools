@@ -7,7 +7,7 @@ services:
   - type: web
     name: moneymako
     env: python
-    buildCommand: "fintools/build.sh"
+    buildCommand: "./build.sh"
     startCommand: "gunicorn fintools.wsgi:application"
     envVars:
       # - key: DATABASE_URL
