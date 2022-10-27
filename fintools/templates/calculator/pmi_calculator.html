@@ -7,8 +7,8 @@
     <div class="tile is-ancestor">
         <div class="tile is-parent">
             <div class="tile is-child box has-background-light">
-                <h1 class="subtitle is-3"><strong>What is private mortgage insurance?</strong></h1>
-                <div class="content">
+                <div class="content is-medium">
+                <h1 class="subtitle is-3">What is private mortgage insurance?</h1>
                     <p>You may be required to purchase private mortgage insurance (PMI) for your home loan if your down payment is less than 20% of the purchase price. It is typically a fixed monthly payment that can be removed as soon as your equity reaches the 20% mark. The fact that PMI is a fixed monthly payment creates an interesting question:</p>
                     <h1 class="subtitle is-5"><strong>At what point does it make sense to put extra money toward paying down your mortgage rather than investing in the market?</strong></h1>
                     <p>Think about your PMI payment as an extra interest payment on the amount of cash it would take to get you to 20% equity in your home. Let's say your monthly PMI payment is $100. You will pay $100 every month whether that amount is $50,000 or $500. That means that your effective “interest rate” increases the closer your get to your goal. At some point, you could be paying over 100% annual interest!</p>
@@ -20,11 +20,11 @@
 </section>
 
 <!-- Calculator Form -->
-<section>
+<section id="pmi-calculator-form">
     <div class="tile is-ancestor">
         <div class="tile is-parent">
             <div class="tile is-child box has-background-light">
-                <h1 class="subtitle is-5">PMI Calculator</h1>
+                <h1 class="title is-3">PMI Calculator</h1>
                 <form method="POST">
                 <div class="columns">
                     <div class="column is-4">
@@ -106,10 +106,15 @@
 </section>
 
 <!-- Data Table -->
-<section>
+{% if paydown_month %}
+<section id="pmi-data">
     <div class="tile is-ancestor">
         <div class="tile is-parent">
             <div class="tile is-child box has-background-light">
+                <div class="content is-medium">
+                    <h1 class="subtitle is-3">Here's the monthly breakdown:</h1>
+                    <p>Starting in month {{paydown_month}} of your loan, it makes more sense to put extra money toward principal rather than investing it in the market. Keep paying down your loan until you reach 20% equity and can remove mortgage insurance.</p>
+                </div>
                 <table class="table is-hoverable">
                     <thead>
                         <tr>
@@ -138,5 +143,6 @@
         </div>
     </div>
 </section>
+{% endif %}
 
 {% endblock %}

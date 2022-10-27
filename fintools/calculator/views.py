@@ -19,7 +19,8 @@ def pmi_calculator(request):
             opportunity_cost_roi = form.cleaned_data['opportunity_cost_roi'] / 100
             pmi_calculator = calculators.PmiCalculator(purchase_price, down_payment_percent, annual_interest_rate, loan_term, monthly_pmi_payment, opportunity_cost_roi)
             pmi_data = pmi_calculator.get_optimal_paydown_period()
-            context_dict.update({'pmi_data': pmi_data})
+            paydown_month = len(pmi_data)
+            context_dict.update({'pmi_data': pmi_data, 'paydown_month': paydown_month})
     return render(request, 'calculator/pmi_calculator.html', context=context_dict)
 
 def annuity_calculator(request):
