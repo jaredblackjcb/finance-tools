@@ -2,26 +2,33 @@
 {% extends "../main.html" %}
 {% load widget_tweaks %}
 {% block content %}
+<!-- PMI Calculator Description -->
 <section>
     <div class="tile is-ancestor">
         <div class="tile is-parent">
             <div class="tile is-child box has-background-light">
-                <h1 class="subtitle is-5">PMI Calculator</h1>
+                <div class="content is-medium">
+                <h1 class="subtitle is-3">What is private mortgage insurance?</h1>
+                    <p>You may be required to purchase private mortgage insurance (PMI) for your home loan if your down payment is less than 20% of the purchase price. It is typically a fixed monthly payment that can be removed as soon as your equity reaches the 20% mark. The fact that PMI is a fixed monthly payment creates an interesting question:</p>
+                    <h1 class="subtitle is-5"><strong>At what point does it make sense to put extra money toward paying down your mortgage rather than investing in the market?</strong></h1>
+                    <p>Think about your PMI payment as an extra interest payment on the amount of cash it would take to get you to 20% equity in your home. Let's say your monthly PMI payment is $100. You will pay $100 every month whether that amount is $50,000 or $500. That means that your effective “interest rate” increases the closer your get to your goal. At some point, you could be paying over 100% annual interest!</p>
+                    <p>This calculator will show you exactly what interest rate you're paying every month due to PMI. If that rate exceeds the investment returns you could get from the market, you should begin paying off your mortgage as quickly as possible until you reach 20% equity and can remove the PMI payment.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Calculator Form -->
+<section id="pmi-calculator-form">
+    <div class="tile is-ancestor">
+        <div class="tile is-parent">
+            <div class="tile is-child box has-background-light">
+                <h1 class="title is-3">PMI Calculator</h1>
                 <form method="POST">
                 <div class="columns">
                     <div class="column is-4">
                             {% csrf_token %}
-                            <!-- {% for field in form.visible_fields %}
-                                <div class="field">
-                                    <label class="label">{{ field.label }}</label>
-                                        <div class="bulma-control-mixin">
-                                            {% render_field field class="input bulma-control-mixin" %}
-                                        </div>
-                                        {% if field.help_text %}
-                                            <p class="help">{{field.help_text}}</p>
-                                        {% endif %}
-                                </div>
-                            {% endfor %} -->
                             <!-- Purchase Price -->
                             <div class="field">
                                 <label class="label">{{ form.purchase_price.label }}</label>
@@ -87,29 +94,27 @@
                                     <i class="fa-solid fa-percent"></i>
                                 </span>
                             </div>
-                            <!-- <p class="help">{{form.opportunity_cost_roi.help_text}}</p> -->
+                            <p class="help">{{form.opportunity_cost_roi.help_text}}</p>
                         </div>
                     </div>
                 </div>
-                           
-                        <input class="button is-primary is-medium" type="submit" value="Submit"/>
-                            <!-- <div class="columns is-vcentered"> -->
-                                <!-- <div class="column"> -->
-                                <!-- </div> -->
-                                <!-- <div class="column is-8">
-                                    <!-- TODO: Add Explanation here -->
-                                <!-- </div>  -->
-                            <!-- </div> -->
-                        <!-- </div> -->
-                    </form>
+                    <input class="button is-primary is-medium" type="submit" value="Submit"/>
+                </form>
             </div>
         </div>
     </div>
 </section>
-<section>
+
+<!-- Data Table -->
+{% if paydown_month %}
+<section id="pmi-data">
     <div class="tile is-ancestor">
         <div class="tile is-parent">
             <div class="tile is-child box has-background-light">
+                <div class="content is-medium">
+                    <h1 class="subtitle is-3">Here's the monthly breakdown:</h1>
+                    <p>Starting in month {{paydown_month}} of your loan, it makes more sense to put extra money toward principal rather than investing it in the market. Keep paying down your loan until you reach 20% equity and can remove mortgage insurance.</p>
+                </div>
                 <table class="table is-hoverable">
                     <thead>
                         <tr>
@@ -138,5 +143,6 @@
         </div>
     </div>
 </section>
+{% endif %}
 
 {% endblock %}
