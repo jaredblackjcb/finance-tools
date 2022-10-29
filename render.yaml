@@ -1,18 +1,18 @@
 # databases:
-#   - name: moneymako
-#     databaseName: moneymako
-#     user: moneymako
+#   - name: finmako
+#     databaseName: finmako
+#     user: finmako
 
 services:
   - type: web
-    name: moneymako
+    name: finmako
     env: python
     buildCommand: "./build.sh"
     startCommand: "gunicorn fintools.wsgi:application"
     envVars:
       # - key: DATABASE_URL
       #   fromDatabase:
-      #     name: moneymako
+      #     name: finmako
       #     property: connectionString
       - key: SECRET_KEY
         generateValue: true
