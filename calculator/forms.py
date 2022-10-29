@@ -6,6 +6,13 @@ class AnnuityCalculator(forms.Form):
     periods = forms.IntegerField(label="Periods", help_text='Number of periods')
 
 class MailingList(forms.ModelForm):
+    botcatcher = forms.CharField(required=False, widget=forms.HiddenInput)
+
+    def clean_botcatcher(self):
+        botcatcher = self.cleaned_data['botcatcher']
+        if len(botcatcher):
+            raise forms.ValidationError("Bot detected")
+
     class Meta:
         model = models.MailingMember
         fields = ['name', 'email']
