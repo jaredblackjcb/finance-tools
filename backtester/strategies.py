@@ -8,14 +8,15 @@ import pandas as pd
 # Strategy for 401k
 class DollarCostAverage(bt.Strategy):
     params = dict(
-        monthly_cash=1000.0, # TODO: Can I somehow set this using an object where the value is set in the view?
+        monthly_cash=None, # TODO: Can I somehow set this using an object where the value is set in the view?
         month_days=[15]
     )
     
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         self.order = None
         self.totalcost = 0
         self.shares_purchased = 0
+        self.p.monthly_cash = args[0]
 
 
     def log(self, txt, datetime=None):

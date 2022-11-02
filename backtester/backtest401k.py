@@ -25,8 +25,8 @@ class Backtester():
         data = bt.feeds.PandasData(dataname=stock_df)
         cerebro.adddata(data)
 
-        # Add a strategy
-        cerebro.addstrategy(self.strategy)
+        # Add a strategy and set monthly_cash
+        cerebro.addstrategy(self.strategy, self.monthly_cash)
 
         # Broker Information
         broker_args = dict(coc=True)
