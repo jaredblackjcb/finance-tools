@@ -33,8 +33,8 @@ class Backtester():
         cerebro.broker = bt.brokers.BackBroker(**broker_args)
 
         # Run cerebro
-        print(f"starting value: {cerebro.broker.getvalue()}")
         cerebro.run()
         if plot:
             cerebro.plot()
-        print(f"ending value: {cerebro.broker.getvalue()}")
+
+        #TODO: return results
