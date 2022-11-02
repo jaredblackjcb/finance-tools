@@ -8,8 +8,8 @@ import pandas as pd
 # Strategy for 401k
 class DollarCostAverage(bt.Strategy):
     params = dict(
-        monthly_cash=None, # TODO: Can I somehow set this using an object where the value is set in the view?
-        month_days=[15]
+        monthly_cash=None,
+        month_days=[1, 16],
     )
     
     def __init__(self, *args, **kwargs):
@@ -31,8 +31,8 @@ class DollarCostAverage(bt.Strategy):
         # Timer to trigger actions on closest trading day to dates in month_days
         self.add_timer(
             when= bt.timer.SESSION_START,
-            weekdays=[3], weekcarry=True,
-            monthdays=[], monthcarry=False,
+            monthdays=self.p.month_days,
+            monthcarry=True,
         )
 
     # Takes place of next_start method, notify_timer contains logic to be triggered when the timer goes off

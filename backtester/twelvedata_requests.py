@@ -15,7 +15,7 @@ def request_daily_time_series(start_date, end_date, symbol):
         stockData['close'] = pd.to_numeric(stockData['close'])
         stockData['volume'] = pd.to_numeric(stockData['volume'])
         stockData.set_index('datetime', inplace=True, drop=True)
-        return stockData
+        return stockData[::-1]
     except requests.exceptions.HTTPError as http_err:
         print(http_err)
     except requests.exceptions.ConnectionError as con_err:
