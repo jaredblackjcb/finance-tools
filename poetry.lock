@@ -10,6 +10,14 @@ python-versions = ">=3.7"
 tests = ["pytest", "pytest-asyncio", "mypy (>=0.800)"]
 
 [[package]]
+name = "backtrader"
+version = "1.9.76.123"
+description = "BackTesting Engine"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "brotli"
 version = "1.0.9"
 description = "Python bindings for the Brotli compression library"
@@ -35,6 +43,14 @@ python-versions = ">=3.6.0"
 
 [package.extras]
 unicode_backport = ["unicodedata2"]
+
+[[package]]
+name = "cycler"
+version = "0.11.0"
+description = "Composable style cycles"
+category = "main"
+optional = false
+python-versions = ">=3.6"
 
 [[package]]
 name = "django"
@@ -84,6 +100,29 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
+name = "kiwisolver"
+version = "1.4.4"
+description = "A fast implementation of the Cassowary constraint solver"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
+name = "matplotlib"
+version = "3.2.2"
+description = "Python plotting package"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+cycler = ">=0.10"
+kiwisolver = ">=1.0.1"
+numpy = ">=1.11"
+pyparsing = ">=2.0.1,<2.0.4 || >2.0.4,<2.1.2 || >2.1.2,<2.1.6 || >2.1.6"
+python-dateutil = ">=2.1"
+
+[[package]]
 name = "numpy"
 version = "1.23.4"
 description = "NumPy is the fundamental package for array computing with Python."
@@ -106,6 +145,17 @@ pytz = ">=2020.1"
 
 [package.extras]
 test = ["pytest-xdist (>=1.31)", "pytest (>=6.0)", "hypothesis (>=5.5.3)"]
+
+[[package]]
+name = "pyparsing"
+version = "3.0.9"
+description = "pyparsing module - Classes and methods to define and execute parsing grammars"
+category = "main"
+optional = false
+python-versions = ">=3.6.8"
+
+[package.extras]
+diagrams = ["railroad-diagrams", "jinja2"]
 
 [[package]]
 name = "python-dateutil"
@@ -198,19 +248,24 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "67e14f794d47f7e47dbc3e5f6248761a3a6d5ced4fe67ab8f286af79c29a63d1"
+content-hash = "c2d5fbb3a80dffdbb44b8db66710fec83b1d80321c6294cc60911fc6866dc73c"
 
 [metadata.files]
 asgiref = []
+backtrader = []
 brotli = []
 certifi = []
 charset-normalizer = []
+cycler = []
 django = []
 django-widget-tweaks = []
 gunicorn = []
 idna = []
+kiwisolver = []
+matplotlib = []
 numpy = []
 pandas = []
+pyparsing = []
 python-dateutil = []
 pytz = []
 requests = []

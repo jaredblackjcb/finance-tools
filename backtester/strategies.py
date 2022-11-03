@@ -18,10 +18,22 @@ class DollarCostAverage(bt.Strategy):
         self.shares_purchased = 0
         self.p.monthly_cash = args[0]
         self.trade_dates = []
+        self.order_logs = []
+        self.order_logs_df = pd.DataFrame(columns=['datetime', 'action', 'purchase_price', 'shares_purchased', 'amount_invested', 'portfolio_value'])
+        self.end_close_price = 0
+        self.end_portfolio_value = 0
+        self.trade_start_date = None
+        self.end_date = None
+        self.years_in_market = 0
+        self.total_percent_return = 0
+        self.total_dollar_return = 0
+        self.annualized_return = 0
+        
 
 
     def log(self, txt, datetime=None):
         datetime = datetime or self.datas[0].datetime.date()
+        self.order_logs.append(f"{datetime.isoformat()} - {txt}")
         print(f"{datetime.isoformat()} - {txt}")
 
     def start(self):
@@ -50,14 +62,21 @@ class DollarCostAverage(bt.Strategy):
             return
         
         if order.status in [order.Completed]:
-            self.trade_dates.append(self.datas[0].datetime.date())
+            trade_date = self.datas[0].datetime.date()
+            self.trade_dates.append(trade_date)
             if order.isbuy():
-                self.log(
-                    f"BUY EXECUTED, Price per Share ${order.executed.price:,.2f}, Shares Purchased {float(order.executed.size)/10**6}, Total Cost ${order.executed.value/10**6:,.2f}, Commission ${order.executed.comm:.2f}"
-                )
+                shares_purchased = float(order.executed.size)/10**6
+                amount_invested = order.executed.value/10**6
                 # Add number of shares and the total cost to the running totals
+                self.log(
+                    f"BUY EXECUTED, Price per Share ${order.executed.price:,.2f}, Shares Purchased {shares_purchased:,.2f}, Total Cost ${amount_invested:,.2f}, Commission ${order.executed.comm:.2f}"
+                )
                 self.shares_purchased += float(order.executed.size)/10**6
                 self.amount_invested += order.executed.value/10**6
+                portfolio_value = self.datas[0].close * self.shares_purchased + self.broker.get_cash() / 10**6
+                print(f"PORTFOLIO VALUE: ${portfolio_value:,.2f}, TOTAL SHARES: {self.shares_purchased:,.2f}, CLOSE PRICE: {self.datas[0].close[0]}")
+                df = pd.DataFrame({'datetime':[trade_date] , 'action':['BUY EXECUTED'], 'purchase_price':[order.executed.price], 'shares_purchased':[shares_purchased], 'amount_invested':[amount_invested], 'portfolio_value':[portfolio_value]})
+                self.order_logs_df = pd.concat([self.order_logs_df, df], axis=0)
         elif order.status in [order.Canceled, order.Margin, order.Rejected]:
             self.log('Order Canceled/Margin/Rejected')
             print(order.status, [order.Canceled, order.Margin, order.Rejected])
@@ -66,29 +85,29 @@ class DollarCostAverage(bt.Strategy):
 
     def stop(self):
         self.fund_roi = (self.broker.get_fundvalue() - self.fund_start_value) - 1
-        end_close_price = self.datas[0].close.array[-1]
-        end_portfolio_value = end_close_price * self.shares_purchased + self.broker.get_cash() / 10**6 # last closing price * units held + ending cash
-        trade_start_date = self.trade_dates[0]
-        end_date = self.datas[0].datetime.date()
-        years_in_market = (end_date - trade_start_date).days/365
-        total_percent_return = (end_portfolio_value / self.amount_invested - 1) * 100
-        total_dollar_return = end_portfolio_value - self.amount_invested
-        annualized_return = 100 * ((1 + total_percent_return/100)**(365/(end_date - trade_start_date).days) - 1)
+        self.end_close_price = self.datas[0].close.array[-1]
+        self.end_portfolio_value = self.end_close_price * self.shares_purchased + self.broker.get_cash() / 10**6 # last closing price * units held + ending cash
+        self.trade_start_date = self.trade_dates[0]
+        self.end_date = self.datas[0].datetime.date()
+        self.years_in_market = (self.end_date - self.trade_start_date).days/365
+        self.total_percent_return = (self.end_portfolio_value / self.amount_invested - 1) * 100
+        self.total_dollar_return = self.end_portfolio_value - self.amount_invested
+        self.annualized_return = 100 * ((1 + self.total_percent_return/100)**(365/(self.end_date - self.trade_start_date).days) - 1)
         print('-'*50)
         print('DOLLAR COST AVERAGE')
-        print(f"Years in Market: {years_in_market:.1f} years")
+        print(f"Years in Market: {self.years_in_market:.1f} years")
         print(f"Shares Purchased: {self.shares_purchased:,.2f}")
-        print(f"Final Closing Price: ${end_close_price:,.2f}")
-        print(f"Portfolio Value: ${end_portfolio_value:,.2f}")
+        print(f"Final Closing Price: ${self.end_close_price:,.2f}")
+        print(f"Portfolio Value: ${self.end_portfolio_value:,.2f}")
         print(f"Total Invested: ${self.amount_invested:,.2f}")
-        print(f"Total Return: ${total_dollar_return:,.2f}")
-        print(f"Total % Return: {total_percent_return:.2f}%")
+        print(f"Total Return: ${self.total_dollar_return:,.2f}")
+        print(f"Total % Return: {self.total_percent_return:.2f}%")
         # print(f"Fund ROI: {self.fund_roi:.2f}%")
-        print(f"Annualized Return: {annualized_return:.2f}%")
+        print(f"Annualized Return: {self.annualized_return:.2f}%")
         print('-'*50)
 
         #TODO: Return dataframe with logs and dictionary with metrics
-        
+
 
 
 
