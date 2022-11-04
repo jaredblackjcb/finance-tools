@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% extends "../main.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<section id="backtest-form">
+    <div class="tile is-ancestor">
+        <div class="tile is-parent">
+            <div class="tile is-child box has-background-light">
+                <h1 class="title is-3">Backtest your Investment Strategy</h1>
+                <form method="POST">
+                <div class="columns">
+                    <div class="column is-4">
+                            {% csrf_token %}
+                            <!-- Ticker Symbol -->
+                            <div class="field">
+                                <label class="label">{{ form.ticker.label }}</label>
+                                        {% render_field form.ticker class="input bulma-control-mixin" %}
+                                    <p class="help">{{form.ticker.help_text}}</p>
+                            </div>
+                            <!-- Start Date -->
+                            <div class="field">
+                                <label class="label">{{ form.start_date.label }}</label>
+                                        {% render_field form.start_date class="input bulma-control-mixin" %}
+                            </div>
+                            <!-- End Date -->
+                            <div class="field">
+                                <label class="label">{{ form.end_date.label }}</label>
+                                        {% render_field form.end_date class="input bulma-control-mixin" %}
+                            </div>
+                            <!-- Monthly Investment -->
+                            <div class="field">
+                                <label class="label">{{ form.monthly_investment.label }}</label>
+                                    <div class="bulma-control-mixin control has-icons-left">
+                                        {% render_field form.monthly_investment class="input bulma-control-mixin" %}
+                                        <span class="icon is-left">
+                                            <i class="fa-solid fa-dollar-sign"></i>
+                                        </span>
+                                    </div>
+                                    <p class="help">{{form.monthly_investment.help_text}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="button is-primary is-medium" type="submit" value="Submit"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

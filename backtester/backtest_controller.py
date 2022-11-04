@@ -1,10 +1,10 @@
 import backtrader as bt
-from twelvedata_requests import request_daily_time_series
+from .twelvedata_requests import request_daily_time_series
 
 
 
 
-class Backtester():
+class BacktestController():
     def __init__(self, ticker, start_date, end_date, strategy, monthly_cash):
         self.ticker = ticker
         self.start_date = start_date
@@ -19,7 +19,6 @@ class Backtester():
 
         # Get data from Twelve Data
         stock_df = request_daily_time_series(start_date=self.start_date, end_date=self.end_date, symbol=self.ticker)
-        print(stock_df)
 
         # Create a backtrader PandasData feed and add it to the cerebro instance
         data = bt.feeds.PandasData(dataname=stock_df)
@@ -49,7 +48,8 @@ class Backtester():
         if plot:
             cerebro.plot()
 
-        return {'amount_invested':amount_invested
+        return {'stock_df':stock_df
+                    ,'amount_invested':amount_invested
                     ,'shares_purchased':shares_purchased
                     ,'order_logs':order_logs
                     ,'order_logs_df':order_logs_df
