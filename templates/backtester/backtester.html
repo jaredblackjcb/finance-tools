@@ -20,12 +20,12 @@
                             <!-- Start Date -->
                             <div class="field">
                                 <label class="label">{{ form.start_date.label }}</label>
-                                        {% render_field form.start_date class="input bulma-control-mixin" %}
+                                        {% render_field form.start_date type="date" class="input bulma-control-mixin" %}
                             </div>
                             <!-- End Date -->
                             <div class="field">
                                 <label class="label">{{ form.end_date.label }}</label>
-                                        {% render_field form.end_date class="input bulma-control-mixin" %}
+                                        {% render_field form.end_date type="date" class="input bulma-control-mixin" %}
                             </div>
                             <!-- Monthly Investment -->
                             <div class="field">
@@ -46,5 +46,45 @@
         </div>
     </div>
 </section>
+
+<!-- Data Table -->
+{% if backtest_data %}
+<section id="backtest-data">
+    <div class="tile is-ancestor">
+        <div class="tile is-parent">
+            <div class="tile is-child box has-background-light">
+                <div class="content is-medium">
+                    <h1 class="subtitle is-3">Investment Activity:</h1>
+                    <p>Explanation here</p>
+                </div>
+                <table class="table is-hoverable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Action</th>
+                            <th>Purchase Price</th>
+                            <th>Shares Purchased</th>
+                            <th>Amount Invested</th>
+                            <th>Portfolio Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for index, row in backtest_data.order_logs_df.iterrows %}
+                        <tr>
+                          {% for cell in row %}
+                            <td>
+                              {{cell}}
+                            </td>
+                          {% endfor %}
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                    </table>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
 
 {% endblock %}
