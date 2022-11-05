@@ -4,15 +4,20 @@
   "description": "",
   "private": "true",
   "scripts": {
-    "css-build": "node-sass --omit-source-map-url sass/styles.scss ../static/css/styles.css",
+    "css-build": "node-sass --omit-source-map-url ./assets/bulma/styles.scss ./static/css/bulma_styles.css",
     "css-watch": "npm run css-build -- --watch",
-    "start": "npm run css-watch"
+    "start": "npm run css-watch",
+    "dev": "webpack --watch --mode development",
+    "webpack-prod": "webpack --mode production",
+    "prod" : "npm run css-build webpack-prod"
   },
   "author": "jaredblack",
   "license": "ISC",
   "devDependencies": {
     "bulma": "^0.9.4",
+    "css-loader": "^6.7.1",
     "node-sass": "^7.0.3",
+    "style-loader": "^3.3.1",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
   },

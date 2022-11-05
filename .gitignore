@@ -131,9 +131,16 @@ dmypy.json
 #bulma
 node_modules
 package-lock.json
+static/css/bulma_styles.css
+
+# Webpack
+static/bundle.js
 
 # VS code
 .vscode
 
 # Mac
 .DS_Store
+
+# Poetry
+poetry.lock
