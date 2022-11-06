@@ -46,14 +46,23 @@
         </div>
     </div>
 </section>
+
+
+{% if backtest_data %}
+<!-- Chart -->
 <section id="chart-section">
-    <div id="chart-container" width="600px" height="400px">
-        
+    <div class="tile is-ancestor">
+        <div class="tile is-parent">
+            <div class="tile is-child box has-background-light">
+                {{ backtest_data.trade_dates|json_script:"trade_dates"}}
+                {{ backtest_data.investment_totals|json_script:"investment_totals"}}
+                {{ backtest_data.portfolio_values|json_script:"portfolio_values"}}
+                <div class="chart-container" id="chart-container"></div>
+            </div>
+        </div>
     </div>
 </section>
-
 <!-- Data Table -->
-{% if backtest_data %}
 <section id="backtest-data">
     <div class="tile is-ancestor">
         <div class="tile is-parent">

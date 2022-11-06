@@ -18,6 +18,8 @@ class DollarCostAverage(bt.Strategy):
         self.shares_purchased = 0
         self.p.monthly_cash = args[0]
         self.trade_dates = []
+        self.investment_totals = []
+        self.portfolio_values = []
         self.order_logs = []
         self.order_logs_df = pd.DataFrame(columns=['datetime', 'action', 'purchase_price', 'shares_purchased', 'amount_invested', 'portfolio_value'])
         self.end_close_price = 0
@@ -75,8 +77,10 @@ class DollarCostAverage(bt.Strategy):
                 self.amount_invested += order.executed.value/10**6
                 portfolio_value = self.datas[0].close * self.shares_purchased + self.broker.get_cash() / 10**6
                 print(f"PORTFOLIO VALUE: ${portfolio_value:,.2f}, TOTAL SHARES: {self.shares_purchased:,.2f}, CLOSE PRICE: {self.datas[0].close[0]}")
-                df = pd.DataFrame({'datetime':[trade_date] , 'action':['BUY EXECUTED'], 'purchase_price':[f"${order.executed.price:,.2f}"], 'shares_purchased':[f"{shares_purchased:,.2f}"], 'amount_invested':[f"${amount_invested:,.2f}"], 'portfolio_value':[f"${portfolio_value:,.2f}"]})
+                df = pd.DataFrame({'datetime':[trade_date] , 'action':['BUY EXECUTED'], 'purchase_price':[f"${order.executed.price:,.2f}"], 'shares_purchased':[f"{shares_purchased:,.2f}"], 'amount_invested':[f"${self.amount_invested:,.2f}"], 'portfolio_value':[f"${portfolio_value:,.2f}"]})
                 self.order_logs_df = pd.concat([self.order_logs_df, df], axis=0)
+                self.investment_totals.append(self.amount_invested)
+                self.portfolio_values.append(portfolio_value)
         elif order.status in [order.Canceled, order.Margin, order.Rejected]:
             self.log('Order Canceled/Margin/Rejected')
             print(order.status, [order.Canceled, order.Margin, order.Rejected])

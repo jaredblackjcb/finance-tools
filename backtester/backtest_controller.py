@@ -45,6 +45,9 @@ class BacktestController():
         total_percent_return = result[0].total_percent_return
         total_dollar_return = result[0].total_dollar_return
         annualized_return = result[0].annualized_return
+        trade_dates = result[0].trade_dates
+        investment_totals = result[0].investment_totals
+        portfolio_values = result[0].portfolio_values
         if plot:
             cerebro.plot()
 
@@ -60,4 +63,7 @@ class BacktestController():
                     ,'years_in_market':years_in_market
                     ,'total_percent_return':total_percent_return
                     ,'total_dollar_return':total_dollar_return
-                    ,'annualized_return':annualized_return}
+                    ,'annualized_return':annualized_return
+                    ,'trade_dates':trade_dates
+                    ,'investment_totals':investment_totals
+                    ,'portfolio_values':portfolio_values}
