@@ -8,3 +8,7 @@
   .chart-container {
     min-height: 400px;
   }
+
+  .table {
+    width: 100%;
+  }

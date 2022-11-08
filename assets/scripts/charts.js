@@ -1,24 +1,32 @@
 import * as echarts from 'echarts';
 
+// Create number formatter.
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+
+  // These options are needed to round to whole numbers
+  minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
+
+// Populate a chart displaying portfolioValue and totalInvested
 waitForElement('#chart-container').then(() => {
   // initialize the echarts instance
-  const myChart = echarts.init(document.getElementById('chart-container'));
   const portfolioValue = JSON.parse(document.getElementById('portfolio_values').textContent);
-  console.log(portfolioValue);
   const totalInvested = JSON.parse(document.getElementById('investment_totals').textContent);
-  console.log(totalInvested);
   const tradeDates = JSON.parse(document.getElementById('trade_dates').textContent);
-  console.log(tradeDates);
-  // const stockPrices = JSON.parse(document.getElementById('amount_invested').textContent);
-
+  
   // Draw the chart
-
+  // Echarts docs: https://echarts.apache.org/en/option.html#title
+  const myChart = echarts.init(document.getElementById('chart-container'));
   myChart.setOption({
     title: {
       text: 'Investment Performance'
     },
     tooltip: {
-      trigger: 'axis'
+      trigger: 'axis',
+      valueFormatter: (value) => formatter.format(value)
     },
     legend: {
       data: ['Portfolio Value', 'Total Invested']
@@ -31,7 +39,8 @@ waitForElement('#chart-container').then(() => {
     },
     toolbox: {
       feature: {
-        saveAsImage: {}
+        saveAsImage: {},
+        dataZoom: {}
       }
     },
     xAxis: {
@@ -40,27 +49,25 @@ waitForElement('#chart-container').then(() => {
       data: tradeDates
     },
     yAxis: {
-      type: 'value'
+      type: 'value',
+      name: '$USD',
+      nameLocation: 'center',
+      nameTextStyle: {
+        fontWeight: 'bold',
+        fontSize: 14
+      }
     },
     series: [
       {
         name: 'Portfolio Value',
         type: 'line',
-        stack: 'Total',
         data: portfolioValue
       },
       {
         name: 'Total Invested',
         type: 'line',
-        stack: 'Total',
         data: totalInvested
       }
-      // {
-      //   name: 'Stock Price',
-      //   type: 'line',
-      //   stack: 'Total',
-      //   data: [150, 232, 201, 154, 190, 330, 410]
-      // }
     ]
   });
 });
