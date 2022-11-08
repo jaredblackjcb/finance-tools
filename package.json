@@ -22,7 +22,6 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "bulma-calendar": "^6.1.18",
     "echarts": "^5.4.0"
   }
 }
