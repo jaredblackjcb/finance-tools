@@ -4,3 +4,11 @@
     border-width: 2px;
     border-color: #c8c8c8;
   }
+
+  .chart-container {
+    min-height: 400px;
+  }
+
+  .table {
+    width: 100%;
+  }
