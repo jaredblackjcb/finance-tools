@@ -2,10 +2,11 @@
 # exit on error
 set -o errexit
 
-poetry install
-
+npm install
 npm run css-build
 npm run webpack-prod
+
+poetry install
 
 python3 manage.py collectstatic --no-input
 python3 manage.py migrate
