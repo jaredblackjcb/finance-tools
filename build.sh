@@ -2,6 +2,10 @@
 # exit on error
 set -o errexit
 
+npm install
+npm run css-build
+npm run webpack-prod
+
 poetry install
 
 python3 manage.py collectstatic --no-input
