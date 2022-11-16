@@ -8,19 +8,36 @@
                 <h1 class="subtitle is-5">Future Value of Annuity Calculator</h1>
                 <form method="POST">
                     {% csrf_token %}
-                    {% for field in form.visible_fields %}
                         <div class="field">
-                            <label class="label">{{ field.label }}</label>
-                                <div class="bulma-control-mixin">
-                                    {% render_field field class="input bulma-control-mixin" %}
+                            <label class="label">{{ annuity_form.payment.label }}</label>
+                                <div class="bulma-control-mixin control has-icons-left">
+                                    {% render_field annuity_form.payment class="input bulma-control-mixin" %}
+                                    <span class="icon is-left">
+                                        <i class="fa-solid fa-dollar-sign"></i>
+                                    </span>
                                 </div>
-                                <p class="help">{{field.help_text}}</p>
+                                <p class="help">{{annuity_form.payment.help_text}}</p>
                         </div>
-                    {% endfor %}
+                        <div class="field">
+                            <label class="label">{{ annuity_form.interest_rate.label }}</label>
+                                <div class="bulma-control-mixin control has-icons-right">
+                                    {% render_field annuity_form.interest_rate class="input bulma-control-mixin" %}
+                                    <span class="icon is-right">
+                                        <i class="fa-solid fa-percent"></i>
+                                    </span>
+                                </div>
+                                <p class="help">{{annuity_form.interest_rate.help_text}}</p>
+                        </div>
+                        <div class="field">
+                            <label class="label">{{ annuity_form.periods.label }}</label>
+                                <div class="bulma-control-mixin control has-icons-right">
+                                    {% render_field annuity_form.periods class="input bulma-control-mixin" %}
+                                </div>
+                                <p class="help">{{annuity_form.periods.help_text}}</p>
+                        </div>
                     <div class="columns is-vcentered">
                         <div class="column">
                             <input class="button is-primary" type="submit" value="Submit"/>
-
                         </div>
                         <div class="column is-8">
                             <span><strong for="Future value">Future Value: ${{future_value}}</strong></span>
