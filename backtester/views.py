@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.contrib import messages
 
-from .forms import BactesterForm
+from .forms import BacktesterForm
 from .backtest_controller import BacktestController
 from .strategies import DollarCostAverage
 
 # Create your views here.
 def backtester(request):
-    form = BactesterForm(request.POST)
+    form = BacktesterForm(request.POST)
     context_dict = {'form': form}
     if request.method == 'POST':
         if form.is_valid():
