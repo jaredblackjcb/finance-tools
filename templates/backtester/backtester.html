@@ -2,6 +2,21 @@
 {% extends "../main.html" %}
 {% load widget_tweaks %}
 {% block content %}
+    <!-- Notifications -->
+    {% if messages %}
+        {% for message in messages %}
+        <!-- Error Message -->
+        <article class="message is-danger">
+            <div class="message-header">
+                <p>Error</p>
+                <button class="delete" aria-label="delete"></button>
+            </div>
+            <div class="message-body">
+                {{ message.message }}
+            </div>
+        </article>
+        {% endfor %}
+    {% endif %}
 <section id="backtest-form">
     <div class="tile is-ancestor">
         <div class="tile is-parent">
